@@ -3,6 +3,10 @@ package Week_01.homework;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+/**
+ * @author linhongxiang
+ * @since 2020/9/26
+ */
 public class LargesRectangleArea {
     /**
      * 使用栈。
