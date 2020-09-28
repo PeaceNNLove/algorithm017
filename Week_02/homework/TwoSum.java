@@ -1,7 +1,4 @@
-package Week_01.homework;
-
-import java.util.HashMap;
-import java.util.Map;
+package Week_02.homework;
 
 //给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
 //
@@ -18,42 +15,44 @@ import java.util.Map;
 //
 // Related Topics 数组 哈希表
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author linhongxiang
- * @since 2020/9/23
+ * @since 2020/9/28
  */
 public class TwoSum {
     /**
-     * 方法一：
-     * 暴力破解O（n^2）
+     * Hash法：
+     * a + b = target, a = target - b
+     * 一次遍历，key 为 target - b, value = b
+     * 二次遍历，遍历a获取value
      */
     public int[] twoSum(int[] nums, int target) {
-        int[] twoIndex = new int[2];
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] + nums[j] == target) {
-                    twoIndex[0] = i;
-                    twoIndex[1] = j;
-                    return twoIndex;
-                }
+            map.put(target - nums[i], i);
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(nums[i]) && i != map.get(nums[i])) {
+                return new int[]{i, map.get(nums[i])};
             }
         }
-        return twoIndex;
+        throw new IllegalArgumentException("not two sum equals to target");
     }
 
     /**
-     * 方法二：
-     * 一次hash法O(n)
+     * 一遍Hash法
      */
     public int[] twoSum2(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            int complement = target - nums[i];
-            if (map.containsKey(complement)) {
-                return new int[]{i, map.get(complement)};
+            if (map.containsKey(nums[i])) {
+                return new int[]{i, map.get(nums[i])};
             }
-            map.put(nums[i], i);
+            map.put(target - nums[i], i);
         }
-        throw new IllegalArgumentException("no element");
+        throw new IllegalArgumentException("not two sum equals to target");
     }
 }
